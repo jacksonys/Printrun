@@ -154,9 +154,12 @@ class DisplayFrame(wx.Frame):
             if (self.direction == "Top Down"):
                 self.printer.send_now("G1 Z-%f F%g" % (self.overshoot, self.z_axis_rate,))
                 self.printer.send_now("G1 Z%f F%g" % (self.overshoot - self.thickness, self.z_axis_rate,))
-            else:  # self.direction == "Bottom Up"
+            elif self.direction == "Bottom Up":
                 self.printer.send_now("G1 Z%f F%g" % (self.overshoot, self.z_axis_rate,))
                 self.printer.send_now("G1 Z-%f F%g" % (self.overshoot - self.thickness, self.z_axis_rate,))
+            else:  # self.direction == "SunWit"
+                self.printer.send_now("G1 X%f F%g" % (self.overshoot, self.z_axis_rate,))
+                self.printer.send_now("G1 X-%f F%g" % (self.overshoot - self.thickness, self.z_axis_rate,))
 
             if (self.postlift_gcode):
                 for line in self.postlift_gcode.split('\n'):
@@ -302,7 +305,7 @@ class SettingsFrame(wx.Frame):
         fieldsizer.Add(self.scale, pos = (3, 1))
 
         fieldsizer.Add(wx.StaticText(self.panel, -1, "Direction:"), pos = (4, 0), flag = wx.ALIGN_CENTER_VERTICAL)
-        self.direction = wx.ComboBox(self.panel, -1, choices = ["Top Down", "Bottom Up"], value = self._get_setting('project_direction', "Top Down"), size = (80, -1))
+        self.direction = wx.ComboBox(self.panel, -1, choices = ["Top Down", "Bottom Up", "SunWit"], value = self._get_setting('project_direction', "Top Down"), size = (80, -1))
         self.direction.Bind(wx.EVT_COMBOBOX, self.update_direction)
         self.direction.SetHelpText("The direction the Z axis should move. Top Down is where the projector is above the model, Bottom up is where the projector is below the model.")
         fieldsizer.Add(self.direction, pos = (4, 1), flag = wx.ALIGN_CENTER_VERTICAL)
