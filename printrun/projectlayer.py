@@ -30,6 +30,9 @@ from collections import OrderedDict
 import itertools
 import math
 
+
+from printrun.objectplater import make_plater, PlaterPanel
+
 class DisplayFrame(wx.Frame):
     def __init__(self, parent, title, res = (1024, 768), printer = None, scale = 1.0, offset = (0, 0)):
         wx.Frame.__init__(self, parent = parent, title = title, size = res)
@@ -223,7 +226,7 @@ class DisplayFrame(wx.Frame):
 
         self.next_img()
 
-class SettingsFrame(wx.Frame):
+class SettingsFrame(PlaterPanel):
 
     def _set_setting(self, name, value):
         if self.pronterface:
@@ -239,6 +242,7 @@ class SettingsFrame(wx.Frame):
             return val
 
     def __init__(self, parent, printer = None):
+        print type(parent)
         wx.Frame.__init__(self, parent, title = "ProjectLayer Control", style = (wx.DEFAULT_FRAME_STYLE | wx.WS_EX_CONTEXTHELP))
         self.SetExtraStyle(wx.FRAME_EX_CONTEXTHELP)
         self.pronterface = parent
