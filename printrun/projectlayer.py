@@ -157,7 +157,7 @@ class DisplayFrame(wx.Frame):
             elif self.direction == "Bottom Up":
                 self.printer.send_now("G1 Z%f F%g" % (self.overshoot, self.z_axis_rate,))
                 self.printer.send_now("G1 Z-%f F%g" % (self.overshoot - self.thickness, self.z_axis_rate,))
-            elif self.direction == "LCD_continuous_print":
+            elif self.direction == "LCD continuous print":
                 self.printer.send_now("G1 X%f F%g" % (self.thickness, self.z_axis_rate,))
             else:  # self.direction == "SunWit"
                 self.printer.send_now("G1 X%f F%g" % (self.overshoot, self.z_axis_rate,))
