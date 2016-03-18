@@ -193,6 +193,12 @@ class DisplayFrame(wx.Frame):
             print "end"
             wx.CallAfter(self.pic.Hide)
             wx.CallAfter(self.Refresh)
+            self.end_routine()
+
+    def end_routine(self):
+
+        self.printer.send_now("G1 X100 F%g" % (self.z_axis_rate,))
+
 
     def present(self,
                 layers,
