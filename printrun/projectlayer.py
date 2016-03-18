@@ -29,6 +29,10 @@ import re
 from collections import OrderedDict
 import itertools
 import math
+import telepot
+
+bot = telepot.Bot('--- TOKEN BOT ---')
+bot.getMe()
 
 class DisplayFrame(wx.Frame):
     def __init__(self, parent, title, res = (1024, 768), printer = None, scale = 1.0, offset = (0, 0)):
@@ -198,6 +202,7 @@ class DisplayFrame(wx.Frame):
     def end_routine(self):
 
         self.printer.send_now("G1 X100 F%g" % (self.z_axis_rate,))
+        bot.sendMessage('--- id pers ---', 'Impresion finalizada!')
 
 
     def present(self,
