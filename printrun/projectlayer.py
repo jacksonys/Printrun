@@ -31,7 +31,7 @@ import itertools
 import math
 import telepot
 
-bot = telepot.Bot('--- TOKEN BOT ---')
+bot = telepot.Bot('180458991:AAF94mThhBl6B_WJpK-oZeitNvy3DEjFafg')
 bot.getMe()
 
 class DisplayFrame(wx.Frame):
@@ -456,12 +456,27 @@ class SettingsFrame(wx.Frame):
 
         infosizer.Add(infofieldsizer)
 
+        # Telegram bot Settings
+
+        telebotboxsizer = wx.StaticBoxSizer(wx.StaticBox(self.panel, label = "Telegram bot settings"), wx.VERTICAL)
+        telebotsizer = wx.GridBagSizer(10, 10)
+
+        telebotsizer.Add(wx.StaticText(self.panel, -1, "Layer (mm):"), pos = (0, 0), flag = wx.ALIGN_CENTER_VERTICAL)
+        self.thickness = wx.TextCtrl(self.panel, -1, str(self._get_setting("project_layer", "0.1")), size = (80, -1))
+        self.thickness.Bind(wx.EVT_TEXT, self.update_thickness)
+        self.thickness.SetHelpText("The thickness of each slice. Should match the value used to slice the model.  SVG files update this value automatically, 3dlp.zip files have to be manually entered.")
+        telebotsizer.Add(self.thickness, pos = (0, 1))
+
+
+        telebotboxsizer.Add(telebotsizer)
         #
 
         vbox.Add(buttonbox, flag = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP | wx.BOTTOM, border = 10)
         vbox.Add(fieldboxsizer, flag = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border = 10)
         vbox.Add(displayboxsizer, flag = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border = 10)
+        vbox.Add(telebotsizer, flag = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border = 10)
         vbox.Add(infosizer, flag = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border = 10)
+
 
         self.panel.SetSizer(vbox)
         self.panel.Fit()
